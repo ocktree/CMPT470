@@ -33,3 +33,16 @@ Compounds removes the automatic space inserted between two characters. EX: = = t
 compounds
   == := 
 end compounds
+
+Recursion
+define expression
+  [ID_or_Number]
+  | [expression] '+ [expression]
+  | [expression] '- [expression]
+  | [expression] '/ [expression]
+  | [expression] '* [expression]
+expression
+
+Show parse tree:
+add -Dparse option to compile EX: txl 1.Txl 2_input -Dparse
+
