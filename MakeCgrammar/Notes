@@ -1,0 +1,35 @@
+[id] - reads a string
+[number] - reads a number
+[NL] - new line
+[EX] - exdent (opposite of indent)
+[IN] - indent
+repeat - reads multiple of the following key word EX: [repeat id] reads multiple words
+
+Abstraction Examples
+[ID_or_Number] - reads a string or number
+[op] - reads an operator
+[assign_operator] - reads an assignment operator
+
+define ID_or_Number
+  [id] | [number]
+end define
+
+define op
+  '+
+  | '-
+  | '*
+  | '/
+end define
+
+define assign_operator
+  | '=
+  | '==
+  | ':=
+end define
+
+pragma - changes a special character into a regular character EX: pragma -id chars "/." Changes period into a regular character to be read with [id]
+
+Compounds removes the automatic space inserted between two characters. EX: = = turns into ==
+compounds
+  == := 
+end compounds
