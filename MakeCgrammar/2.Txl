@@ -19,9 +19,7 @@ define function_name
 end define
 
 define function_body
-	[repeat multiple_variable_declaration] [return_statement]
-	| [repeat variable_declaration] [return_statement]
-	| [repeat double_variable_declaration] [return_statement]
+	[repeat variable_declaration] [return_statement]
 	| [print_statement] [return_statement]
 end define
 
@@ -29,20 +27,8 @@ define return_type
 	int
 end define
 
-define pi
-	[double_variable_declaration] [number];
-end define
-
-define double_variable_declaration	
-	[id] [id] [id]
-end define
-
 define variable_declaration
-	[id] [id]; [NL] | [id] [id] [id]; [NL]
-end define
-
-define multiple_variable_declaration
-	[id] [id],[id],[id]; [NL]
+	[id] [id]; [NL]
 end define
 
 define print_statement
