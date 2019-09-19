@@ -29,7 +29,15 @@ define return_type
 end define
 
 define pi
-  [variable_declaration] '= [number]; [NL]
+  [variable_declaration] [operator] [number]; [NL]
+end define
+
+compounds
+  == :=
+end compounds
+
+define operator
+  '= | == | :=
 end define
 
 define variable_declaration
