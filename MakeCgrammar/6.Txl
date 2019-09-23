@@ -19,7 +19,7 @@ define function_name
 end define
 
 define function_body
-  [pi] [return_statement]
+  [assignExpr] [return_statement]
   | [repeat variable_declaration] [return_statement]
   | [print_statement] [return_statement]
 end define
@@ -28,22 +28,35 @@ define return_type
   int
 end define
 
-define pi
-  [variable_declaration] [operator] [number]; [NL]
+define endLine %the '; is optional in condition statements
+  ';
+end define
+
+define assignExpr
+  [variable_declaration] [assignOp] [expression]; [NL]
 end define
 
 compounds
   == :=
 end compounds
 
-define operator
-  '= | '== | ':=
+define assignOp
+  = | == | :=
 end define
 
 define variable_declaration
   [repeat id]
   | [repeat id]; [NL]
   | [id] [id],[id],[id]; [NL]
+end define
+
+define charExpression
+  [charlit]
+  |[charExpression] '+ [charExpression]
+end define
+
+define expression
+  [id] | [number]
 end define
 
 define print_statement

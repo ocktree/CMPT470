@@ -37,14 +37,13 @@ compounds
 end compounds
 
 define operator
-  '= | == | :=
+  '= | '== | ':=
 end define
 
 define variable_declaration
-  [repeat id]; [NL]
-  | [repeat id]
-  | [id] [id]; [NL]
-  | [id] [repeat id],[id]; [NL]
+  [repeat id]
+  | [repeat id]; [NL]
+  | [id] [id],[id],[id]; [NL]
 end define
 
 define print_statement
