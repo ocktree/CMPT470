@@ -19,13 +19,13 @@ define function_name
 end define
 
 define function_body
-  [assignExpr] [return_statement]
+  [repeat variable_declaration] [repeat assignExpr] [return_statement]
   | [repeat variable_declaration] [return_statement]
   | [print_statement] [return_statement]
 end define
 
 define return_type
-  int
+  int | char
 end define
 
 define endLine %the '; is optional in condition statements
@@ -34,6 +34,7 @@ end define
 
 define assignExpr
   [variable_declaration] [assignOp] [expression]; [NL]
+  | [variable_declaration] [assignOp] [charExpression]; [NL]
 end define
 
 compounds
