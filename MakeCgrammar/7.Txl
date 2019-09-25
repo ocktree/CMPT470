@@ -20,7 +20,6 @@ end define
 
 define function_body
   [repeat variable_declaration] [repeat assignExpr] [return_statement]
-  | [repeat variable_declaration] [return_statement]
   | [print_statement] [return_statement]
 end define
 
@@ -56,6 +55,7 @@ define charExpression
   [charlit]
   | [charExpression] [op] [charExpression]
   | [charExpression] [op] [expression]
+  | [expression] [op] [expression]
 end define
 
 define expression
