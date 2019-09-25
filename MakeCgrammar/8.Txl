@@ -1,4 +1,6 @@
 %Grammer:
+#pragma -id chars "/,"
+
 define program
   [c_function]
 end define
@@ -6,7 +8,7 @@ end define
 define c_function
   [function_head] [NL]
   { [NL][IN]
-    [function_body]
+    [function_body] [return_statement]
   }
 end define
 
@@ -19,8 +21,13 @@ define function_name
 end define
 
 define function_body
-  [repeat variable_declaration] [repeat assignExpr] [return_statement]
-  | [print_statement] [return_statement]
+  [repeat command]
+end define
+
+define command
+  [repeat variable_declaration] [repeat assignExpr]
+  | [print_statement]
+  | [scanf_statement]
 end define
 
 define return_type
@@ -70,6 +77,14 @@ end define
 
 define bit_AND
   '&
+end define
+
+define comma
+  ',
+end define
+
+define scanf_statement
+  scanf([stringlit][expression],[bit_AND][expression]);
 end define
 
 define print_statement
