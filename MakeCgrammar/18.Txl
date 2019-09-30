@@ -1,16 +1,12 @@
 %Grammer:
-#pragma -id chars "/,"
 
 define program
   [c_function]
 end define
 
 define c_function
-  [function_head] [NL]
-  { [NL][IN]
-    [function_body] [return_statement]
-  }
-  | [inclusion] [NL]
+  [repeat inclusion] [NL]
+  [repeat signature]
   [function_head] [NL]
   { [NL][IN]
     [function_body] [return_statement]
@@ -19,7 +15,17 @@ define c_function
 end define
 
 define inclusion
-  '# 'include <[id].h>
+  '#'include <[id].h> [NL]| '#'include [stringlit] [NL]
+end define
+
+define signature
+/* Author: [repeat id] [NL] [IN]
+   Date: [ID_or_Number]/[ID_or_Number]/[ID_or_Number]
+   Description: [repeat sentence] */ [NL] [EX]
+end define
+
+define sentence
+  [id] | [number] | [stringlit] | [charlit]
 end define
 
 define function_head
@@ -43,6 +49,7 @@ define command
   | [for_statement]
   | [while_statment]
   | [do_while_statement]
+  | [commentate]
 end define
 
 define return_type
@@ -64,7 +71,7 @@ define assignExpr
 end define
 
 compounds
-  == := && <= >= ++ --
+  == := && <= >= ++ -- !=
 end compounds
 
 define assignOp
@@ -84,11 +91,11 @@ define charExpression
 end define
 
 define expression
-  [id] | [number] | [expression] [op] [expression]
+  [ID_or_Number] | [expression] [op] [expression]
 end define
 
 define ID_or_Number
-  [id] | [number]
+  [id] | [number] | -[number] | [stringlit] | [charlit]
 end define
 
 define conditional_expression
@@ -98,8 +105,9 @@ define conditional_expression
   | [NOT]
   | [NOT] [bool_op] [ID_or_Number]
   | [ID_or_Number]
-  | [id] = [ID_or_Number]; [id] [bool_op] [ID_or_Number]; [id] [op]
-
+  | [id] = [ID_or_Number]; [id] [bool_op] [ID_or_Number]; [id] [increment_decrement]
+  | ([conditional_expression]) [bool_op] [conditional_expression]
+  | ([conditional_expression])
 end define
 
 define op
@@ -111,7 +119,7 @@ define increment_decrement
 end define
 
 define bool_op
-'&& | [OR][OR] | '== | '> | '< | '>= | '<=
+'&& | [OR][OR] | '== | '> | '< | '>= | '<= | '!=
 end define
 
 define bit_AND
@@ -124,10 +132,6 @@ end define
 
 define OR
 '|
-end define
-
-define comma
-  ',
 end define
 
 define if_else_statement
@@ -156,8 +160,9 @@ define scanf_statement
 end define
 
 define print_statement
-  printf([stringlit]); [NL] |
-  printf([stringlit],[expression]); [NL]
+  printf([stringlit]); [NL]
+  | printf([stringlit],[expression]); [NL]
+  | printf([stringlit],[repeat variable_declaration]); [NL]
 end define
 
 define for_statement
@@ -198,13 +203,17 @@ end define
 
 define case
 'case [charlit]: [NL] [IN]
-[command]
+[repeat command]
 break; [NL] [EX]
 end define
 
 define default
 'default: [NL] [IN]
 [command] [EX] [EX]
+end define
+
+define commentate
+//[repeat sentence]
 end define
 
 define return_statement
