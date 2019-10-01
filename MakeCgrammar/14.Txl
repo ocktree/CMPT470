@@ -30,33 +30,21 @@ define command
   | [if_else_statement]
   | [scanf_statement]
   | [switch_statement]
-  | [for_statement]
+  | [for_loop]
 end define
 
 define return_type
   int | char
 end define
 
-define endLine %the '; is optional in condition statements
-  ';
-end define
-
-define bracket  % bracket definition
-  '( | ')
-end define
-
 define assignExpr
-  [variable_declaration] [assignOp] [expression]; [NL]
-  | [variable_declaration] [assignOp] [charExpression]; [NL]
+  [variable_declaration] [op] [expression]; [NL]
+  | [variable_declaration] [op] [charExpression]; [NL]
 end define
 
 compounds
-  == := && <= >= ++ --
+  == := && ++ -- <= >=
 end compounds
-
-define assignOp
-  = | == | := 
-end define
 
 define variable_declaration
   [repeat id]
@@ -74,24 +62,20 @@ define expression
   [id] | [number] | [expression] [op] [expression]
 end define
 
-define ID_or_Number
-  [id] | [number]
-end define
-
 define conditional_expression
-  [id] [bool_op] [ID_or_Number]
-  | [id] [bool_op] [ID_or_Number] [bool_op] [conditional_expression]
+  [expression] [bool_op] [expression]
+  | [expression] [bool_op] [expression] [bool_op] [conditional_expression]
   | [NOT] [bool_op] [conditional_expression]
   | [NOT]
-  | [NOT] [bool_op] [ID_or_Number]
+  | [NOT] [bool_op] [expression]
 end define
 
 define op
-  '+ | '- | '* | '++ | '--
+  '+ | '- | '* | '= | ':=
 end define
 
 define bool_op
-'&& | [OR][OR] | '== | '> | '< | '>= | '<=
+'&& | [OR][OR] | '== | '> | '< | '<= | '>=
 end define
 
 define bit_AND
@@ -103,11 +87,11 @@ define NOT
 end define
 
 define OR
-'|
+  '|
 end define
 
-define comma
-  ',
+define increment_decrement
+  '++ | '--
 end define
 
 define if_else_statement
@@ -140,17 +124,8 @@ define print_statement
   printf([stringlit],[expression]); [NL]
 end define
 
-define for_statement
-  for ([for_condiational]) [NL] [IN]
-    [command] [NL] [EX]
-end define
-
-define for_condiational
-  [ID_or_Number] | [id] = [ID_or_Number]; [id] [bool_op] [ID_or_Number]; [id] [op]
-end define
-
 define switch_statement
-switch([id]) [NL]
+switch([expression]) [NL]
 { [NL] [IN]
   [repeat case]
   [default]
@@ -158,14 +133,24 @@ switch([id]) [NL]
 end define
 
 define case
-'case [charlit]: [NL] [IN]
-[command]
-break; [NL] [EX]
+  'case [charExpression]: [NL] [IN]
+  [command]
+  break; [NL] [EX]
 end define
 
 define default
-'default: [NL] [IN]
-[command] [NL] [EX] [EX]
+  'default: [NL] [IN]
+  [command] [NL] [EX] [EX]
+end define
+
+define for_loop
+  for ([for_conditional]) [NL] [IN]
+    [command] [NL] [EX]
+end define
+
+define for_conditional
+  [expression]
+  | [expression]; [conditional_expression]; [expression] [increment_decrement]
 end define
 
 define return_statement
