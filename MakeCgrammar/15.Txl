@@ -31,15 +31,11 @@ define command
   | [scanf_statement]
   | [switch_statement]
   | [for_statement]
-  | [while_statment]
+  | [while_statement]
 end define
 
 define return_type
   int | char
-end define
-
-define endLine %the '; is optional in condition statements
-  ';
 end define
 
 define bracket  % bracket definition
@@ -76,18 +72,14 @@ define expression
   [id] | [number] | [expression] [op] [expression]
 end define
 
-define ID_or_Number
-  [id] | [number]
-end define
-
 define conditional_expression
-  [id] [bool_op] [ID_or_Number]
-  | [id] [bool_op] [ID_or_Number] [bool_op] [conditional_expression]
+  [expression] [bool_op] [expression]
+  | [expression] [bool_op] [expression] [bool_op] [conditional_expression]
   | [NOT] [bool_op] [conditional_expression]
   | [NOT]
-  | [NOT] [bool_op] [ID_or_Number]
-  | [ID_or_Number]
-  | [id] = [ID_or_Number]; [id] [bool_op] [ID_or_Number]; [id] [op]
+  | [NOT] [bool_op] [expression]
+  | [expression]
+  | [expression]; [conditional_expression]; [id][op]
 
 end define
 
@@ -158,7 +150,7 @@ define for_statement
   } [NL]
 end define
 
-define while_statment
+define while_statement
 while ([conditional_expression]) [NL] [IN]
   [command][EX]
 | while ([conditional_expression]) [NL]
@@ -176,14 +168,14 @@ switch([id]) [NL]
 end define
 
 define case
-'case [charlit]: [NL] [IN]
-[command]
-break; [NL] [EX]
+  'case [charlit]: [NL] [IN]
+  [command]
+  break; [NL] [EX]
 end define
 
 define default
-'default: [NL] [IN]
-[command] [EX] [EX]
+  'default: [NL] [IN]
+  [command] [EX] [EX]
 end define
 
 define return_statement
