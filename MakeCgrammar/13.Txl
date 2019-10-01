@@ -73,16 +73,12 @@ define expression
   [id] | [number] | [expression] [op] [expression]
 end define
 
-define ID_or_Number
-  [id] | [number]
-end define
-
 define conditional_expression
-  [id] [bool_op] [ID_or_Number]
-  | [id] [bool_op] [ID_or_Number] [bool_op] [conditional_expression]
+  [expression] [bool_op] [expression]
+  | [expression] [bool_op] [expression] [bool_op] [conditional_expression]
   | [NOT] [bool_op] [conditional_expression]
   | [NOT]
-  | [NOT] [bool_op] [ID_or_Number]
+  | [NOT] [bool_op] [expression]
 end define
 
 define op
@@ -140,7 +136,7 @@ define print_statement
 end define
 
 define switch_statement
-switch([id]) [NL]
+switch([expression]) [NL]
 { [NL] [IN]
   [repeat case]
   [default]
@@ -148,14 +144,14 @@ switch([id]) [NL]
 end define
 
 define case
-'case [charlit]: [NL] [IN]
-[command]
-break; [NL] [EX]
+  'case [charExpression]: [NL] [IN]
+  [command]
+  break; [NL] [EX]
 end define
 
 define default
-'default: [NL] [IN]
-[command] [NL] [EX] [EX]
+  'default: [NL] [IN]
+  [command] [NL] [EX] [EX]
 end define
 
 define return_statement
